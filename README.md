@@ -19,11 +19,11 @@ El contenido de este repositorio ayudará a entender esta situación desde vario
 * `script.py`: Script para generar diversas gráficas con datos a nivel nacional.
 * `estatal.py`: Script para generar un mapa y una tabla de incidencia a nivel estatal.
 * `requirements.txt`: Archivo que lista las librerías necesarias para ejecutar los scripts.
-* Conjuntos de datos correspondientes a los años 202-2025, todos en formato CSV.
+* Conjuntos de datos correspondientes a los años 2020-2025, todos en formato CSV.
 
 ## Análisis
 
-Las siguientes gráficas son generadas con los scripts antes mencionados.
+Las siguientes visualizaciones son generadas con los scripts antes mencionados.
 
 ### Tendencia semanal
 
