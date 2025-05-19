@@ -162,7 +162,7 @@ def crear_mapa(año, entidad):
             zmin=valor_min,
             zmax=valor_max,
             colorbar=dict(
-                x=0.035,
+                x=0.065,
                 y=0.5,
                 ypad=50,
                 ticks="outside",
@@ -190,6 +190,7 @@ def crear_mapa(año, entidad):
             marker_line_width=2,
             zmin=0,
             zmax=1,
+            showscale=False,
         )
     )
 
@@ -235,7 +236,7 @@ def crear_mapa(año, entidad):
                 font_size=40,
             ),
             dict(
-                x=0.03,
+                x=0.06,
                 y=0.48,
                 textangle=-90,
                 xanchor="center",
@@ -243,7 +244,7 @@ def crear_mapa(año, entidad):
                 text="Tasa bruta por cada 100,000 habitantes",
             ),
             dict(
-                x=0.01,
+                x=0.05,
                 y=-0.03,
                 xanchor="left",
                 yanchor="top",
@@ -257,7 +258,7 @@ def crear_mapa(año, entidad):
                 text=subtitulo,
             ),
             dict(
-                x=1.0,
+                x=0.96,
                 y=-0.03,
                 xanchor="right",
                 yanchor="top",
@@ -412,5 +413,5 @@ def crear_tabla_absolutos(año, entidad):
 
 
 if __name__ == "__main__":
-    # crear_mapa(2025, 8)
+    crear_mapa(2025, 8)
     crear_tabla_absolutos(2025, 8)
