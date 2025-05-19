@@ -253,7 +253,7 @@ def tendencia(año):
     df = df[df["FECHA_DIAGNOSTICO"] != "9999-99-99"]
 
     # Convertimos el resto de fechas a datetime.
-    df["FECHA_DIAGNOSTICO"] = pd.to_datetime(df["FECHA_DIAGNOSTICO"])
+    df["FECHA_DIAGNOSTICO"] = pd.to_datetime(df["FECHA_DIAGNOSTICO"], dayfirst=True)
 
     df = df.pivot_table(
         index="FECHA_DIAGNOSTICO",
@@ -277,7 +277,7 @@ def tendencia(año):
         go.Bar(
             x=df.index,
             y=df[1],
-            name=f"Positivo a sarampión<br>(total acumulado: <b>{df[1].sum():,.0f}</b>)",
+            name=f"Positivo para sarampión<br>(total acumulado: <b>{df[1].sum():,.0f}</b>)",
             marker_line_width=0,
             marker_color="#f57c00",
         )
@@ -287,7 +287,7 @@ def tendencia(año):
         go.Bar(
             x=df.index,
             y=df[3],
-            name=f"Descartado a sarampión<br>(total acumulado: <b>{df[3].sum():,.0f}</b>)",
+            name=f"Descartado por sarampión<br>(total acumulado: <b>{df[3].sum():,.0f}</b>)",
             marker_line_width=0,
             marker_color="#2196f3",
         )
