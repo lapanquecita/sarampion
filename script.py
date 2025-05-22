@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "21/05/2025"
+FECHA_FUENTE = "22/05/2025"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -158,7 +158,7 @@ def tsas_edad_sexo(año):
     )
 
     fig.update_yaxes(
-        range=[-0.09, None],
+        range=[-0.15, None],
         title="Tasa por cada 100,000 hombres/mujeres dentro del grupo de edad",
         ticks="outside",
         title_font_size=22,
