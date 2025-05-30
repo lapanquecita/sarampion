@@ -75,6 +75,8 @@ Asimismo, se incluye una tabla sencilla que desglosa los 30 municipios más afec
 
 Esta tabla también está disponible a nivel nacional.
 
+![Tabla incidencia nacional](./imgs/tabla_2025.png)
+
 ### Conclusión
 
 Con la información disponible en los conjuntos de datos abiertos de la Secretaría de Salud, es posible comprender diversos aspectos del brote de sarampión en México.

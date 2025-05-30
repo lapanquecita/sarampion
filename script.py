@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "22/05/2025"
+FECHA_FUENTE = "29/05/2025"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -503,7 +503,7 @@ def evolucion_casos(año):
         font_family="Lato",
         font_color="#FFFFFF",
         font_size=24,
-        title_text="Evolución de los casos confirmados de <b>sarampión</b> en México durante el 2025",
+        title_text=f"Evolución de los casos confirmados de <b>sarampión</b> en México durante el {año}",
         title_x=0.5,
         title_y=0.965,
         margin_t=120,
