@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "29/05/2025"
+FECHA_FUENTE = "04/06/2025"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -358,13 +358,13 @@ def crear_tabla_absolutos(año, entidad):
                 fill_color=["#00897b", "#00897b", "#e65100", "#00897b"],
                 line_width=0.75,
                 align="center",
-                height=28,
+                height=43,
             ),
             cells=dict(
                 values=[df.index, df["municipio"], df["total"], df["tasa"]],
                 line_width=0.75,
                 fill_color=PLOT_COLOR,
-                height=28,
+                height=43,
                 format=["", "", ",.0f", ",.1f"],
                 align=["center", "left", "center"],
             ),
@@ -373,37 +373,37 @@ def crear_tabla_absolutos(año, entidad):
 
     fig.update_layout(
         showlegend=False,
-        width=840,
-        height=1050,
+        width=1280,
+        height=1600,
         font_family="Inter",
         font_color="#FFFFFF",
-        font_size=16,
-        margin_t=110,
+        font_size=25,
+        margin_t=180,
         margin_l=40,
         margin_r=40,
         margin_b=0,
         title_x=0.5,
         title_y=0.95,
-        title_font_size=24,
+        title_font_size=40,
         title_text=f"Los 30 municipios de <b>{ENTIDADES[entidad]}</b> con la mayor<br><b>incidencia</b> de sarampión durante el {año}",
         paper_bgcolor=PAPER_COLOR,
         annotations=[
             dict(
                 x=0.015,
-                y=0.015,
+                y=0.02,
                 xanchor="left",
                 yanchor="top",
                 text=f"Fuente: SSA ({FECHA_FUENTE})",
             ),
             dict(
                 x=0.57,
-                y=0.015,
+                y=0.02,
                 xanchor="center",
                 yanchor="top",
                 text=subtitulo,
             ),
             dict(
-                x=1.01, y=0.015, xanchor="right", yanchor="top", text="🧁 @lapanquecita"
+                x=1.01, y=0.02, xanchor="right", yanchor="top", text="🧁 @lapanquecita"
             ),
         ],
     )
