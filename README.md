@@ -55,6 +55,14 @@ Para los nodos de defunción se aplicó un valor epsilon con el objetivo de que 
 
 Cada nodo incluye el total de casos en cifras absolutas.
 
+### Distribución de las defunciones
+
+El número de defunciones por sarampión es relativamente bajo; no obstante, resulta fundamental identificar a los grupos poblacionales que se ven afectados.
+
+Para este propósito, se utilizaron dos gráficas de tipo strip plot. En ellas, cada punto representa una observación individual; las tiras corresponden a cada sexo y la posición en el eje horizontal indica la edad.
+
+![Defunicones](./imgs/defunciones_2025.png)
+
 ### Incidencia por edad y sexo
 
 El sarampión no afecta por igual a todos los grupos de edad, y esto se demuestra con el siguiente gráfico de dispersión, que muestra la tasa de incidencia por grupos quinquenales de edad y sexo.

@@ -5,7 +5,7 @@ from scipy.stats import bootstrap
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "10/09/2025"
+FECHA_FUENTE = "02/10/2025"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -174,6 +174,7 @@ def tendencia(año):
         legend_itemsizing="constant",
         showlegend=True,
         legend_borderwidth=1,
+        legend_title=" <b>Diagnóstico del caso</b> ",
         legend_bordercolor="#FFFFFF",
         legend_x=0.01,
         legend_y=0.98,
@@ -585,6 +586,147 @@ def evolucion_casos(año):
     fig.write_image(f"./evolucion_{año}.png")
 
 
+def defunciones(año):
+    """
+    Genera una gráfica con la distribución de defunciones
+    por sarampión según edad y sexo.
+
+    Parameters
+    ----------
+    año : int
+        El año que se desea graficar.
+
+    """
+
+    # Cargamos el dataset del año especificado.
+    df = pd.read_csv(f"./data/{año}.csv")
+
+    # Seleccionamos los registros positivos por sarampión.
+    df = df[df["DIAGNOSTICO"] == 1]
+
+    # Seleccionamos las defunicones.
+    df = df[df["DEFUNCION"] == 1]
+
+    # Creamos dos DataFrames, uno para mujeres y otro para hombres.
+    mujeres = df[df["SEXO"] == 1]
+    hombres = df[df["SEXO"] == 2]
+
+    # Vamos a crear dos strip plots, uno para cada sexo.
+    fig = go.Figure()
+
+    fig.add_traces(
+        go.Box(
+            x=hombres["EDAD_ANOS"],
+            y=[f"<b>Hombres</b><br>(total: {len(hombres)})"] * len(hombres),
+            boxpoints="all",
+            pointpos=0,
+            whiskerwidth=0,
+            line_width=0,
+            fillcolor="hsla(0, 0, 0, 0)",
+            marker_color="#00e5ff",
+            jitter=1,
+            marker_size=20,
+            marker_symbol="circle-open",
+            marker_line_width=4,
+            orientation="h",
+        )
+    )
+
+    fig.add_traces(
+        go.Box(
+            x=mujeres["EDAD_ANOS"],
+            y=[f"<b>Mujeres</b><br>(total: {len(mujeres)})"] * len(mujeres),
+            boxpoints="all",
+            pointpos=0,
+            whiskerwidth=0,
+            line_width=0,
+            fillcolor="hsla(0, 0, 0, 0)",
+            marker_color="#ffea00",
+            jitter=1,
+            marker_size=20,
+            marker_symbol="circle-open",
+            marker_line_width=4,
+            orientation="h",
+        )
+    )
+
+    fig.update_xaxes(
+        ticks="outside",
+        ticklen=10,
+        zeroline=False,
+        tickcolor="#FFFFFF",
+        linewidth=2,
+        showline=True,
+        showgrid=True,
+        gridwidth=0.5,
+        mirror=True,
+        nticks=25,
+    )
+
+    fig.update_yaxes(
+        ticks="outside",
+        separatethousands=True,
+        ticklen=10,
+        title_standoff=15,
+        tickcolor="#FFFFFF",
+        linewidth=2,
+        gridwidth=0.5,
+        showline=True,
+        zeroline=False,
+        mirror=True,
+    )
+
+    fig.update_layout(
+        showlegend=False,
+        width=1920,
+        height=1080,
+        font_family="Inter",
+        font_color="#FFFFFF",
+        font_size=24,
+        title_text=f"Defunciones por sarampión en México durante {año} según edad y sexo",
+        title_x=0.5,
+        title_y=0.965,
+        margin_t=80,
+        margin_r=40,
+        margin_b=120,
+        margin_l=180,
+        title_font_size=36,
+        plot_bgcolor=PLOT_COLOR,
+        paper_bgcolor=PAPER_COLOR,
+        annotations=[
+            dict(
+                x=0.01,
+                y=-0.11,
+                xref="paper",
+                yref="paper",
+                xanchor="left",
+                yanchor="top",
+                text=f"Fuente: SSA ({FECHA_FUENTE})",
+            ),
+            dict(
+                x=0.5,
+                y=-0.11,
+                xref="paper",
+                yref="paper",
+                xanchor="center",
+                yanchor="top",
+                text="Edad al momento del diagnóstico",
+            ),
+            dict(
+                x=1.01,
+                y=-0.11,
+                xref="paper",
+                yref="paper",
+                xanchor="right",
+                yanchor="top",
+                text="🧁 @lapanquecita",
+            ),
+        ],
+    )
+
+    # Nombramos el archivo resultante con los parámetros de la función.
+    fig.write_image(f"./defunciones_{año}.png")
+
 
 def tsas_edad_sexo(año):
     """
@@ -752,7 +894,7 @@ def tsas_edad_sexo(año):
                 yref="paper",
                 xanchor="center",
                 yanchor="top",
-                text="Grupo de edad al momento de la infección",
+                text="Grupo de edad al momento del diagnóstico",
             ),
             dict(
                 x=1.01,
@@ -768,8 +910,6 @@ def tsas_edad_sexo(año):
 
     # Nombramos el archivo resultante con los parámetros de la función.
     fig.write_image(f"./tasas_edad_{año}.png")
-
-
 
 
 def tasas_vacunacion(año):
@@ -850,7 +990,7 @@ def tasas_vacunacion(año):
         go.Bar(
             x=final.index,
             y=final["confirmados_mean"],
-            name=f"Casos confirmados (n=<b>{len(confirmados):,.0f}</b>)",
+            name=f"Positivo para sarampión<br>(total: <b>{len(confirmados):,.0f}</b>)",
             marker_color="#ff6f00",
             marker_line_width=0,
             error_y_array=final["confirmados_high"] - final["confirmados_mean"],
@@ -867,7 +1007,7 @@ def tasas_vacunacion(año):
         go.Bar(
             x=final.index,
             y=final["descartados_mean"],
-            name=f"Casos descartados (n=<b>{len(descartados):,.0f}</b>)",
+            name=f"Descartado por sarampión<br>(total: <b>{len(descartados):,.0f}</b>)",
             marker_color="#00897b",
             marker_line_width=0,
             error_y_array=final["descartados_high"] - final["descartados_mean"],
@@ -913,6 +1053,7 @@ def tasas_vacunacion(año):
         showlegend=True,
         legend_itemsizing="constant",
         legend_borderwidth=1,
+        legend_title=" <b>Diagnóstico del caso</b> ",
         legend_bordercolor="#FFFFFF",
         legend_x=0.99,
         legend_y=0.98,
@@ -1105,6 +1246,7 @@ if __name__ == "__main__":
     tendencia_origen(2025)
 
     evolucion_casos(2025)
+    defunciones(2025)
 
     tsas_edad_sexo(2025)
     tasas_vacunacion(2025)

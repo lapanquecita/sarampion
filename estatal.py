@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "10/09/2025"
+FECHA_FUENTE = "02/10/2025"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
