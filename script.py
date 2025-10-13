@@ -5,7 +5,7 @@ from scipy.stats import bootstrap
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "02/10/2025"
+FECHA_FUENTE = "09/10/2025"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -728,7 +728,7 @@ def defunciones(año):
     fig.write_image(f"./defunciones_{año}.png")
 
 
-def tsas_edad_sexo(año):
+def tasas_edad_sexo(año):
     """
     Crea una gráfica de dispersión mostrando las distintas
     tasas de incidencia de sarampión por grupo de edad y sexo.
@@ -1091,7 +1091,7 @@ def tasas_vacunacion(año):
                 yref="paper",
                 xanchor="center",
                 yanchor="top",
-                text="Grupo de edad al momento de la valoración",
+                text="Grupo de edad al momento del diagnóstico",
             ),
             dict(
                 x=1.01,
@@ -1248,7 +1248,7 @@ if __name__ == "__main__":
     evolucion_casos(2025)
     defunciones(2025)
 
-    tsas_edad_sexo(2025)
+    tasas_edad_sexo(2025)
     tasas_vacunacion(2025)
 
     crear_tabla_absolutos(2025)
