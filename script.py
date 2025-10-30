@@ -5,7 +5,7 @@ from scipy.stats import bootstrap
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "23/10/2025"
+FECHA_FUENTE = "29/10/2025"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -65,7 +65,7 @@ MESES = {
 }
 
 
-def tendencia(año):
+def tendencia(año, xanchor="left"):
     """
     Genera una gráfica de barras con la incidencia
     semanal de sarampión.
@@ -74,6 +74,10 @@ def tendencia(año):
     ----------
     año : int
         El año que se desea graficar.
+
+    xanchor : str
+        Especifica de que lado estará colocada la leyenda.
+        Puede ser 'left' o 'right'.
 
     """
 
@@ -176,9 +180,9 @@ def tendencia(año):
         legend_borderwidth=1,
         legend_title=" <b>Diagnóstico del caso</b> ",
         legend_bordercolor="#FFFFFF",
-        legend_x=0.01,
+        legend_x=0.01 if xanchor == "left" else 0.99,
         legend_y=0.98,
-        legend_xanchor="left",
+        legend_xanchor=xanchor,
         legend_yanchor="top",
         width=1920,
         height=1080,
@@ -230,7 +234,7 @@ def tendencia(año):
     fig.write_image(f"./tendencia_{año}.png")
 
 
-def tendencia_origen(año):
+def tendencia_origen(año, xanchor="left"):
     """
     Genera una gráfica de barras con la incidencia
     semanal de sarampión según el origen del caso.
@@ -239,6 +243,10 @@ def tendencia_origen(año):
     ----------
     año : int
         El año que se desea graficar.
+
+    xanchor : str
+        Especifica de que lado estará colocada la leyenda.
+        Puede ser 'left' o 'right'.
 
     """
 
@@ -367,9 +375,9 @@ def tendencia_origen(año):
         legend_title=" <b>Origen de casos positivos</b> ",
         legend_borderwidth=1,
         legend_bordercolor="#FFFFFF",
-        legend_x=0.01,
+        legend_x=0.01 if xanchor == "left" else 0.99,
         legend_y=0.98,
-        legend_xanchor="left",
+        legend_xanchor=xanchor,
         legend_yanchor="top",
         width=1920,
         height=1080,
@@ -1243,7 +1251,7 @@ def crear_tabla_absolutos(año):
 
 if __name__ == "__main__":
     tendencia(2025)
-    tendencia_origen(2025)
+    tendencia_origen(2025, "right")
 
     evolucion_casos(2025)
     defunciones(2025)
