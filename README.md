@@ -84,7 +84,7 @@ A medida que se recolecten más datos, los intervalos de confianza se irán afin
 
 ### Mapa de incidencia
 
-El brote de sarampión de 2025 se encuentra focalizado en el estado de Chihuahua, con aproximadamente el 95 % de los casos confirmados.
+El brote de sarampión de 2025 se encuentra focalizado en el estado de Chihuahua, con aproximadamente el 85% de los casos confirmados.
 
 Para identificar si existe un patrón geográfico, se utiliza un mapa *choropleth*.
 
