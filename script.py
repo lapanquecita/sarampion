@@ -5,7 +5,7 @@ from scipy.stats import bootstrap
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "27/11/2025"
+FECHA_FUENTE = "03/12/2025"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -507,7 +507,7 @@ def evolucion_casos(año):
                 ],
             ),
             link=dict(
-                color="hsla(0, 100, 100, 0.25)",
+                color="hsla(0, 100, 100, 0.225)",
                 source=[
                     0,
                     0,
