@@ -49,7 +49,7 @@ Para conocer cómo ha evolucionado cada caso confirmado de sarampión, se utiliz
 
 Este nos permite visualizar cuántas personas estaban vacunadas, cuántas no, y si hubo o no complicaciones en cada una de estas categorías, así como identificar si hubo un desenlace fatal.
 
-![Diagrama sankey](./imgs/evolucion_2025.png)
+![Diagrama sankey](./imgs/evolucion_2025-2026.png)
 
 Para los nodos de defunción se aplicó un valor epsilon con el objetivo de que fueran perceptibles.
 
@@ -61,7 +61,7 @@ El número de defunciones por sarampión es relativamente bajo; no obstante, res
 
 Para este propósito, se utilizaron dos gráficas de tipo strip plot. En ellas, cada punto representa una observación individual; las tiras corresponden a cada sexo y la posición en el eje horizontal indica la edad.
 
-![Defunicones](./imgs/defunciones_2025.png)
+![Defunicones](./imgs/defunciones_2025-2026.png)
 
 ### Incidencia por edad y sexo
 
@@ -79,7 +79,7 @@ En lugar de usar grupos quinquenales, se optó por utilizar los grupos etarios d
 
 A medida que se recolecten más datos, los intervalos de confianza se irán afinando y reflejarán mejor la variabilidad de las estimaciones.
 
-![Vacunación](./imgs/vacunacion_2025.png)
+![Vacunación](./imgs/vacunacion_2025-2026.png)
 
 
 ### Mapa de incidencia

@@ -5,7 +5,7 @@ from scipy.stats import bootstrap
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "06/01/2026"
+FECHA_FUENTE = "20/01/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -432,20 +432,27 @@ def tendencia_origen(año, xanchor="left"):
     fig.write_image(f"./tendencia_origen_{año}.png")
 
 
-def evolucion_casos(año):
+def evolucion_casos(*años):
     """
     Genera un diagrama sankey con la evolución
     de los casos confirmados de sarampión.
 
     Parameters
     ----------
-    año : int
-        El año que se desea graficar.
+    años : list
+        Los años que nos interesa graficar.
 
     """
 
-    # Cargamos el dataset del año especificado.
-    df = pd.read_csv(f"./data/{año}.csv")
+    # Esta lista será utilizada para agrupar los DataFrames.
+    dfs = list()
+
+    # Vamos a iterar sobre cada año y cargar el dataset correspondiente.
+    for año in años:
+        dfs.append(pd.read_csv(f"./data/{año}.csv"))
+
+    # Unimos todos los DataFrames en uno solo.
+    df = pd.concat(dfs)
 
     # Seleccionamos los casos confirmados de sarampión.
     df = df[df["DIAGNOSTICO"] == 1]
@@ -470,6 +477,12 @@ def evolucion_casos(año):
 
     # Este valor es para evitar que los nodos de las defunciones no aparezcan.
     epsilon = 30
+
+    # Dependiendo de cuantos años fueron analizados será el titulo y nombre de archivo.
+    if len(años) == 1:
+        año = años[0]
+    else:
+        año = f"{min(años)}-{max(años)}"
 
     # Un diagrama sankey requiere especificar todos los valores.
     # Para nuestros 11 nodos ya tenemos los cálculos ya hechos.
@@ -597,20 +610,27 @@ def evolucion_casos(año):
     fig.write_image(f"./evolucion_{año}.png")
 
 
-def defunciones(año):
+def defunciones(*años):
     """
     Genera una gráfica con la distribución de defunciones
     por sarampión según edad y sexo.
 
     Parameters
     ----------
-    año : int
-        El año que se desea graficar.
+    años : list
+        Los años que nos interesa graficar.
 
     """
 
-    # Cargamos el dataset del año especificado.
-    df = pd.read_csv(f"./data/{año}.csv")
+    # Esta lista será utilizada para agrupar los DataFrames.
+    dfs = list()
+
+    # Vamos a iterar sobre cada año y cargar el dataset correspondiente.
+    for año in años:
+        dfs.append(pd.read_csv(f"./data/{año}.csv"))
+
+    # Unimos todos los DataFrames en uno solo.
+    df = pd.concat(dfs)
 
     # Seleccionamos los registros positivos por sarampión.
     df = df[df["DIAGNOSTICO"] == 1]
@@ -621,6 +641,12 @@ def defunciones(año):
     # Creamos dos DataFrames, uno para mujeres y otro para hombres.
     mujeres = df[df["SEXO"] == 1]
     hombres = df[df["SEXO"] == 2]
+
+    # Dependiendo de cuantos años fueron analizados será el titulo y nombre de archivo.
+    if len(años) == 1:
+        año = años[0]
+    else:
+        año = f"{min(años)}-{max(años)}"
 
     # Vamos a crear dos strip plots, uno para cada sexo.
     fig = go.Figure()
@@ -911,20 +937,27 @@ def tasas_edad_sexo(año):
     fig.write_image(f"./tasas_edad_{año}.png")
 
 
-def tasas_vacunacion(año):
+def tasas_vacunacion(*años):
     """
     Crea una gráfica de barras comparando la cobertura
     de vavunación por grupo etario y tipo de caso.
 
     Parameters
     ----------
-    año : int
-        El año que nos interesa graficar.
+    años : list
+        Los años que nos interesa graficar.
 
     """
 
-    # Cargamos el dataset del año especificado.
-    df = pd.read_csv(f"./data/{año}.csv")
+    # Esta lista será utilizada para agrupar los DataFrames.
+    dfs = list()
+
+    # Vamos a iterar sobre cada año y cargar el dataset correspondiente.
+    for año in años:
+        dfs.append(pd.read_csv(f"./data/{año}.csv"))
+
+    # Unimos todos los DataFrames en uno solo.
+    df = pd.concat(dfs)
 
     # Modificamos la columna de vacunación para que sean ceros (no vacunados) y unos (vacunados).
     df["VACUNACION"] = df["VACUNACION"].map({2: 0, 1: 1})
@@ -981,6 +1014,12 @@ def tasas_vacunacion(año):
 
     # Convertimos todas las cifras a porcentaje.
     final *= 100
+
+    # Dependiendo de cuantos años fueron analizados será el titulo y nombre de archivo.
+    if len(años) == 1:
+        año = años[0]
+    else:
+        año = f"{min(años)}-{max(años)}"
 
     fig = go.Figure()
 
@@ -1244,10 +1283,10 @@ if __name__ == "__main__":
     tendencia(2025)
     tendencia_origen(2025, "right")
 
-    evolucion_casos(2025)
-    defunciones(2025)
+    evolucion_casos(2025, 2026)
+    defunciones(2025, 2026)
 
     tasas_edad_sexo(2025)
-    tasas_vacunacion(2025)
+    tasas_vacunacion(2025, 2026)
 
     crear_tabla_absolutos(2025)
