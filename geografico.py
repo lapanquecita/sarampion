@@ -9,7 +9,7 @@ from plotly.subplots import make_subplots
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "09/03/2026"
+FECHA_FUENTE = "25/03/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -54,7 +54,7 @@ ENTIDADES = {
 }
 
 
-def crear_mapa(entidad_id, *años):
+def crear_mapa_entidad(entidad_id, *años):
     """
     Genera un mapa choropleth con la incidencia de sarampión
     por municipio de la entidad y año(s) especificados.
@@ -130,7 +130,7 @@ def crear_mapa(entidad_id, *años):
     # Para la máxima usaremos el percentil 95
     # debido a que hay valores atípicos.
     valor_min = np.nanmin(df["tasa"])
-    valor_max = np.quantile(df["tasa"], 0.95)
+    valor_max = np.nanquantile(df["tasa"], 0.95)
 
     # Vamos a crear nuestra escala con 13 intervalos.
     marcas = np.linspace(valor_min, valor_max, 13)
@@ -150,7 +150,7 @@ def crear_mapa(entidad_id, *años):
         open(f"./assets/{ENTIDADES[entidad_id]}.json", "r", encoding="utf-8")
     )
 
-    # Dependiendo de cuantos años fueron analizados será el titulo y nombre de archivo.
+    # Dependiendo de cuantos años fueron analizados será el título y nombre de archivo.
     if len(años) == 1:
         año = años[0]
     else:
@@ -279,7 +279,7 @@ def crear_mapa(entidad_id, *años):
     fig.write_image(f"./mapa_{año}_{entidad_id}.png")
 
 
-def crear_mapa_estatal(*años):
+def crear_mapa_nacional(*años):
     """
     Crea un mapa choropleth con la incidencia de sarampión
     por entidad para los años especificados.
@@ -349,7 +349,7 @@ def crear_mapa_estatal(*años):
     # Para la máxima usaremos el percentil 95
     # debido a que hay valores atípicos.
     valor_min = np.nanmin(df["tasa"])
-    valor_max = np.quantile(df["tasa"], 0.95)
+    valor_max = np.nanquantile(df["tasa"], 0.95)
 
     marcas = np.linspace(valor_min, valor_max, 11)
     etiquetas = [f"{item:,.1f}" for item in marcas]
@@ -360,7 +360,7 @@ def crear_mapa_estatal(*años):
     # Cargamos el archivo GeoJSON de México.
     geojson = json.loads(open("./assets/mexico.json", "r", encoding="utf-8").read())
 
-    # Dependiendo de cuantos años fueron analizados será el titulo y nombre de archivo.
+    # Dependiendo de cuantos años fueron analizados será el título y nombre de archivo.
     if len(años) == 1:
         año = años[0]
     else:
@@ -376,8 +376,7 @@ def crear_mapa_estatal(*años):
             z=df["tasa"],
             featureidkey="properties.NOM_ENT",
             colorscale="matter_r",
-            marker_line_color="#FFFFFF",
-            marker_line_width=1.5,
+            marker_line_width=0,
             zmin=valor_min,
             zmax=valor_max,
             colorbar=dict(
@@ -393,6 +392,31 @@ def crear_mapa_estatal(*años):
                 tickcolor="#FFFFFF",
                 ticklen=10,
             ),
+        )
+    )
+
+    # Vamos a sobreponer otro mapa Choropleth, el cual
+    # tiene el único propósito de mostrar la división política
+    # de las entidades federativas.
+
+    # Cargamos el archivo GeoJSON de México.
+    geojson_borde = json.loads(
+        open("./assets/mexico.json", "r", encoding="utf-8").read()
+    )
+
+    # Este mapa tiene mucho menos personalización.
+    # Lo único que necesitamos es que muestre los contornos
+    # de cada entidad.
+    fig.add_traces(
+        go.Choropleth(
+            geojson=geojson_borde,
+            locations=[f"{i:02}" for i in range(1, 33)],
+            z=[1 for _ in range(32)],
+            featureidkey="properties.CVEGEO",
+            colorscale=["hsla(0, 0, 0, 0)", "hsla(0, 0, 0, 0)"],
+            marker_line_color="#FFFFFF",
+            marker_line_width=2,
+            showscale=False,
         )
     )
 
@@ -668,7 +692,7 @@ def crear_mapa_municipal(*años):
     # Cargamos el GeoJSON de municipios de México.
     geojson = json.loads(open("./assets/municipios.json", "r", encoding="utf-8").read())
 
-    # Dependiendo de cuantos años fueron analizados será el titulo y nombre de archivo.
+    # Dependiendo de cuantos años fueron analizados será el título y nombre de archivo.
     if len(años) == 1:
         año = años[0]
     else:
@@ -817,13 +841,16 @@ def crear_mapa_municipal(*años):
     fig.write_image(f"./mapa_municipal_{año}.png")
 
 
-def crear_tabla_absolutos(*años):
+def crear_tabla_absolutos(entidad_id, *años):
     """
     Crea una tabla listando los municipios con
     mayor incidencia absoluta de sarampión.
 
     Parameters
     ----------
+    entidad_id : int
+        La entidad que se desea graficar.
+
     años : list
         Los años que nos interesa graficar.
 
@@ -853,14 +880,19 @@ def crear_tabla_absolutos(*años):
     # Unimos todos los DataFrames en uno solo.
     df = pd.concat(dfs)
 
+    # Seleccionamos los casos confirmados de sarampión.
+    df = df[df["DIAGNOSTICO"] == 1]
+
     # Quitamos municipios no identificados.
     df = df[df["MUNICIPIO_RES"] != "999"]
 
     # Creamos el CVE para entidad y municipio.
     df["CVE"] = df["ENTIDAD_RES"].str.zfill(2) + df["MUNICIPIO_RES"].str.zfill(3)
 
-    # Seleccionamos los casos confirmados de sarampión.
-    df = df[df["DIAGNOSTICO"] == 1]
+    # Seleccionamos solo los registros de la entidad especificada.
+    # si la entidad es 0, los registros son a nivel nacional.
+    if entidad_id != 0:
+        df = df[df["CVE"].str.startswith(str(entidad_id).zfill(2))]
 
     # Contamos los registros por municipio.
     df = df["CVE"].value_counts().to_frame("total")
@@ -886,7 +918,7 @@ def crear_tabla_absolutos(*años):
     # Por ahora el subtítulo no será usado.
     subtitulo = ""
 
-    # Dependiendo de cuantos años fueron analizados será el titulo y nombre de archivo.
+    # Dependiendo de cuantos años fueron analizados será el título y nombre de archivo.
     if len(años) == 1:
         año = años[0]
     else:
@@ -936,7 +968,7 @@ def crear_tabla_absolutos(*años):
         title_x=0.5,
         title_y=0.95,
         title_font_size=40,
-        title_text=f"Los 30 municipios de México con la mayor<br><b>incidencia</b> de sarampión durante {año}",
+        title_text=f"Los municipios de {ENTIDADES[entidad_id]} con la mayor<br><b>incidencia</b> de sarampión durante {año}",
         paper_bgcolor=PAPER_COLOR,
         annotations=[
             dict(
@@ -964,16 +996,19 @@ def crear_tabla_absolutos(*años):
     )
 
     # Nombramos el archivo resultante con los parámetros de la función.
-    fig.write_image(f"./tabla_absolutos_{año}.png")
+    fig.write_image(f"./tabla_absolutos_{entidad_id}_{año}.png")
 
 
-def crear_tabla_tasa(*años):
+def crear_tabla_tasa(entidad_id, *años):
     """
     Crea una tabla listando los municipios con
     mayor tasa de incidencia de sarampión.
 
     Parameters
     ----------
+    entidad_id : int
+        La entidad que se desea graficar.
+
     años : list
         Los años que nos interesa graficar.
 
@@ -1001,11 +1036,19 @@ def crear_tabla_tasa(*años):
     # Unimos todos los DataFrames en uno solo.
     df = pd.concat(dfs)
 
+    # Seleccionamos los casos confirmados de sarampión.
+    df = df[df["DIAGNOSTICO"] == 1]
+
+    # Quitamos municipios no identificados.
+    df = df[df["MUNICIPIO_RES"] != "999"]
+
     # Creamos el CVE para entidad y municipio.
     df["CVE"] = df["ENTIDAD_RES"].str.zfill(2) + df["MUNICIPIO_RES"].str.zfill(3)
 
-    # Seleccionamos los casos confirmados de sarampión.
-    df = df[df["DIAGNOSTICO"] == 1]
+    # Seleccionamos solo los registros de la entidad especificada.
+    # si la entidad es 0, los registros son a nivel nacional.
+    if entidad_id != 0:
+        df = df[df["CVE"].str.startswith(str(entidad_id).zfill(2))]
 
     # Contamos los registros por municipio.
     df = df["CVE"].value_counts().to_frame("total")
@@ -1031,7 +1074,7 @@ def crear_tabla_tasa(*años):
     # Por ahora el subtítulo no será usado.
     subtitulo = ""
 
-    # Dependiendo de cuantos años fueron analizados será el titulo y nombre de archivo.
+    # Dependiendo de cuantos años fueron analizados será el título y nombre de archivo.
     if len(años) == 1:
         año = años[0]
     else:
@@ -1081,7 +1124,7 @@ def crear_tabla_tasa(*años):
         title_x=0.5,
         title_y=0.95,
         title_font_size=40,
-        title_text=f"Los 30 municipios de México con la mayor<br><b>tasa</b> de sarampión durante {año}",
+        title_text=f"Los municipios de {ENTIDADES[entidad_id]} con la mayor<br><b>tasa</b> de sarampión durante {año}",
         paper_bgcolor=PAPER_COLOR,
         annotations=[
             dict(
@@ -1109,14 +1152,21 @@ def crear_tabla_tasa(*años):
     )
 
     # Nombramos el archivo resultante con los parámetros de la función.
-    fig.write_image(f"./tabla_absolutos_tasa_{año}.png")
+    fig.write_image(f"./tabla_tasa_{entidad_id}_{año}.png")
 
 
 if __name__ == "__main__":
-    crear_mapa(8, 2025, 2026)
-    crear_mapa(14, 2025, 2026)
+    crear_mapa_entidad(8, 2025, 2026)
+    crear_mapa_entidad(14, 2025, 2026)
 
-    crear_mapa_estatal(2025, 2026)
+    crear_mapa_nacional(2025)
+    crear_mapa_nacional(2026)
+    crear_mapa_nacional(2025, 2026)
+
     crear_mapa_municipal(2025, 2026)
-    crear_tabla_absolutos(2025, 2026)
-    crear_tabla_tasa(2025, 2026)
+
+    crear_tabla_absolutos(0, 2025, 2026)
+    crear_tabla_absolutos(8, 2025, 2026)
+    crear_tabla_absolutos(14, 2025, 2026)
+
+    crear_tabla_tasa(0, 2025, 2026)

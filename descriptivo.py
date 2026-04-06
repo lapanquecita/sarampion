@@ -1770,6 +1770,5 @@ if __name__ == "__main__":
     evolucion_casos(2025, 2026)
     defunciones(2025, 2026)
     razon_riesgo(2025, 2026)
-
     tasas_edad_sexo(2025, 2026)
     cobertura_vacunacion(2025, 2026)

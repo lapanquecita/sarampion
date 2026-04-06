@@ -10,38 +10,60 @@ Los datos provienen de la Secretaría de Salud: [https://www.gob.mx/salud/docume
 
 ## Contexto histórico
 
-Durante décadas, la propagación del sarampión se ha mantenido bajo control gracias a las altas tasas de vacunación. Sin embargo, esto cambió en 2025, cuando México experimentó un brote significativo, localizado en el estado de Chihuahua.
+Durante décadas, la propagación del sarampión se ha mantenido bajo control gracias a las altas tasas de vacunación. o obstante, entre 2025 y 2026, México ha enfrentado un brote significativo que, inicialmente concentrado en ciertos estados, ha llegado a reportar casos en todo el territorio nacional.
 
 El contenido de este repositorio ayudará a entender esta situación desde varios ángulos.
 
 ## Contenido
 
-* `script.py`: Script para generar diversas gráficas con datos a nivel nacional.
-* `estatal.py`: Script para generar un mapa y una tabla de incidencia a nivel estatal.
-* `requirements.txt`: Archivo que lista las librerías necesarias para ejecutar los scripts.
-* Conjuntos de datos correspondientes a los años 2020-2025, todos en formato CSV.
+* **`descriptivo.py`**: Script para generar análisis descriptivos y gráficas, incluyendo:
 
-## Análisis
+  * Curva epidemiológica del sarampión.
+  * Tasas de vacunación.
+  * Tasas de incidencia por edad y sexo.
+  * Evolución de los casos, mostrando el desenlace de cada caso confirmado.
+  * Modelado de riesgo.
 
-Las siguientes visualizaciones son generadas con los scripts antes mencionados.
+* **`geografico.py`**: Script para generar visualizaciones geográficas y tablas de incidencia, incluyendo:
 
-### Tendencia semanal
+  * Mapas coropléticos a nivel nacional, estatal y municipal.
+  * Tablas con valores absolutos o tasas por entidad y a nivel nacional.
+
+* **`assets/`**: Carpeta que contiene archivos GeoJSON para generar los mapas, así como datos de población y un diccionario para las variables.
+
+* **`data/`**: Carpeta que incluye los conjuntos de datos correspondientes a los años 2020-2026, todos en formato CSV.
+
+* **`requirements.txt`**: Archivo que lista las librerías necesarias para ejecutar los scripts.
+
+## Análisis descriptivo
+
+Las siguientes visualizaciones son generadas con los scripts antes mencionados. Todas las gráficas pueden configurarse para mostrar los datos de un año específico o de múltiples años, reflejando que el brote de sarampión se considera un fenómeno continuo debido a su naturaleza excepcional.
+
+### Incindencia temporal
 
 El análisis comienza con la incidencia semanal de casos confirmados de sarampión por laboratorio.
 
 Para esta gráfica de barras, definimos cada semana como el periodo de lunes a viernes. Esta decisión se tomó para facilitar la interpretación al público general.
 
-![Tendencia](./imgs/tendencia_2025.png)
+![Semanal](./imgs/semanal_2025.png)
 
 Siempre habrá una reducción en la última semana debido al rezago en la captura de registros.
 
-### Tendencia semanal según origen
+Adicionalmente, esta información también está disponible en formato mensual, permitiendo un análisis complementario de las tendencias a lo largo del tiempo.
 
-Esta gráfica muestra la evolución semanal de los casos positivos de sarampión, desagregados según su origen epidemiológico: importados, relacionados con importación, autóctonos y de fuente desconocida.
+![Mensual](./imgs/mensual_2025-2026.png)
 
-![Tendencia origen](./imgs/tendencia_origen_2025.png)
+### Incidencia temporal según origen
 
-Al igual que en la gráfica anterior, se observa una disminución aparente en la última semana por el rezago natural en la notificación de casos.
+La evolución de los casos positivos de sarampión se analiza semanalmente según su origen epidemiológico: importados, relacionados con importación, autóctonos y de fuente desconocida.
+
+![Origen semanal](./imgs/origen_semanal_2025.png)
+
+Se observa una disminución aparente en la última semana debido al rezago natural en la notificación de casos.
+
+La información también está disponible en formato mensual, ofreciendo una visión agregada de las tendencias a lo largo del tiempo.
+
+![Origen mensual](./imgs/origen_mensual_2025-2026.png)
 
 ### Evolución de los casos confirmados
 
@@ -67,7 +89,7 @@ Para este propósito, se utilizaron dos gráficas de tipo strip plot. En ellas, 
 
 El sarampión no afecta por igual a todos los grupos de edad, y esto se demuestra con el siguiente gráfico de dispersión, que muestra la tasa de incidencia por grupos quinquenales de edad y sexo.
 
-![Edad y sexo](./imgs/tasas_edad_2025.png)
+![Edad y sexo](./imgs/tasas_edad_2025-2026.png)
 
 A medida que se recolectan más datos, las tendencias tienden a estabilizarse.
 
@@ -81,30 +103,51 @@ A medida que se recolecten más datos, los intervalos de confianza se irán afin
 
 ![Vacunación](./imgs/vacunacion_2025-2026.png)
 
+### Riesgo de casos severos de sarampión
 
-### Mapa de incidencia
+Esta gráfica presenta los resultados de un modelo de Poisson con error estándar robusto, utilizado para estimar la probabilidad de desarrollar un caso severo de sarampión. El modelo está ajustado por la edad de la persona y su estado de vacunación.
 
-El brote de sarampión de 2025 se encuentra focalizado en el estado de Chihuahua, con aproximadamente el 85% de los casos confirmados.
+Se eligió un modelo de Poisson con error robusto en lugar de un modelo logístico porque permite estimar riesgos relativos de manera directa y precisa cuando el evento **no es raro**, y el ajuste robusto corrige posibles desviaciones en la varianza.
 
-Para identificar si existe un patrón geográfico, se utiliza un mapa *choropleth*.
+![Riesgo](./imgs/riesgo_2025-2026.png)
 
-![Mapa choropleth](./imgs/mapa_2025_8.png)
+## Análisis geográfico
 
-Este mapa representa la severidad de las tasas de incidencia mediante una escala de color que va del azul (bajo) al rojo (muy alto).
+Esta sección presenta la distribución espacial del brote de sarampión en México a través de mapas y tablas municipales. Los mapas muestran la incidencia a distintos niveles —local, estatal y nacional— mientras que las tablas identifican los municipios con mayor carga de enfermedad, en términos absolutos o ajustados por población.
 
-Por el momento, solo se incluye el archivo GeoJSON del estado de Chihuahua. Esto podría cambiar en caso de que la infección se extienda a otras entidades.
+### Mapa de incidencia para una entidad
 
-### Tabla de incidencia
+El brote comenzó en 2025 concentrándose en el estado de Chihuahua. El mapa a continuación ilustra la incidencia de casos confirmados durante el primer año del brote.
 
-Asimismo, se incluye una tabla sencilla que desglosa los 30 municipios más afectados del estado. La tabla presenta tanto las cifras absolutas como las tasas ajustadas por cada 100,000 habitantes.
+![Mapa Chihuahua](./imgs/mapa_2025-2026_8.png)
 
-![Tabla incidencia](./imgs/tabla_2025_8.png)
+En 2026, se observó un foco emergente en el estado de Jalisco. Este mapa muestra la incidencia durante la expansión del brote hacia esta región.
 
-Esta tabla también está disponible a nivel nacional.
+![Mapa Jalisco](./imgs/mapa_2025-2026_14.png)
 
-![Tabla incidencia nacional](./imgs/tabla_2025.png)
+### Mapa de incidencia nacional
 
-### Conclusión
+A nivel nacional, los mapas estatales permiten comparar la incidencia entre entidades y observar la propagación del brote a lo largo de 2025-2026.
+
+![Mapa estatal](./imgs/mapa_estatal_2025-2026.png)
+
+### Mapa de incidencia municipal
+
+Finalmente, los mapas a nivel municipal muestran la incidencia con mayor resolución, facilitando la identificación de clústeres locales y áreas de atención prioritaria.
+
+![Mapa municipal](./imgs/mapa_municipal_2025-2026.png)
+
+### Tablas de tasas e incidencias
+
+Se generan tablas que muestran los 30 municipios con mayor incidencia de sarampión, ya sea a nivel nacional o filtradas por un estado específico. Los valores pueden presentarse en términos absolutos o ajustados por población, ofreciendo una visión precisa de los focos más afectados.
+
+![Tabla absolutos](./imgs/tabla_absolutos_0_2025-2026.png)
+
+Estas tablas son útiles para orientar intervenciones focalizadas y priorizar recursos sanitarios a nivel municipal.
+
+![Tabla tasa](./imgs/tabla_tasa_0_2025-2026.png)
+
+## Conclusión
 
 Con la información disponible en los conjuntos de datos abiertos de la Secretaría de Salud, es posible comprender diversos aspectos del brote de sarampión en México.
 
