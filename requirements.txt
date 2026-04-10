@@ -3,3 +3,4 @@ scipy
 statsmodels
 plotly
 kaleido
+pillow
