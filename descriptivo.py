@@ -106,7 +106,7 @@ def tendencia_semanal(año, xanchor="left"):
         fill_value=0,
     )
 
-    # Haremos un remuestreo semanal de lunes a viernes.
+    # Haremos un remuestreo semanal de lunes a domingo.
     df = df.resample("W-MON", label="left", closed="left").sum()
 
     # Fix para fechas incorrectas.
@@ -459,7 +459,7 @@ def tendencia_semanal_origen(año, xanchor="left"):
         if i not in df.columns:
             df[i] = 0
 
-    # Haremos un remuestreo semanal de lunes a viernes.
+    # Haremos un remuestreo semanal de lunes a domingo.
     df = df.resample("W-MON", label="left", closed="left").sum()
 
     # Creamos las etiquetas para nuestro eje horizontal.
@@ -659,7 +659,7 @@ def tendencia_mensual_origen(*años):
         if i not in df.columns:
             df[i] = 0
 
-    # Haremos un remuestreo semanal de lunes a viernes.
+    # Haremos un remuestreo mensual.
     df = df.resample("MS").sum()
 
     # Fix para fechas incorrectas (muy pocos registros).

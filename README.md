@@ -43,7 +43,7 @@ Las siguientes visualizaciones son generadas con los scripts antes mencionados. 
 
 El análisis comienza con la incidencia semanal de casos confirmados de sarampión por laboratorio.
 
-Para esta gráfica de barras, definimos cada semana como el periodo de lunes a viernes. Esta decisión se tomó para facilitar la interpretación al público general.
+Para esta gráfica de barras, definimos cada semana como el periodo de lunes a domingo. Esta decisión se tomó para facilitar la interpretación al público general.
 
 ![Semanal](./imgs/semanal_2025.png)
 
