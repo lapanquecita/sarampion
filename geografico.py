@@ -9,7 +9,7 @@ from plotly.subplots import make_subplots
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "07/04/2026"
+FECHA_FUENTE = "15/04/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -54,6 +54,35 @@ ENTIDADES = {
 }
 
 
+def cargar_datos(*años):
+    """
+    Esta función es utilizada para cargar
+    los datasets de los años especificados.
+
+    Parameters
+    ----------
+    años : list
+        Los años que nos interesa graficar.
+
+    """
+
+    # Esta lista será utilizada para agrupar los DataFrames.
+    dfs = list()
+
+    # Vamos a iterar sobre cada año y cargar el dataset correspondiente.
+    for año in años:
+        dfs.append(
+            pd.read_csv(
+                f"./data/{año}.csv", dtype={"ENTIDAD_RES": str, "MUNICIPIO_RES": str}
+            )
+        )
+
+    # Unimos todos los DataFrames en uno solo.
+    df = pd.concat(dfs)
+
+    return df
+
+
 def crear_mapa_entidad(entidad_id, *años):
     """
     Genera un mapa choropleth con la incidencia de sarampión
@@ -82,19 +111,8 @@ def crear_mapa_entidad(entidad_id, *años):
     # Calculamos la población total de la entidad.
     poblacion_total = pop.sum()
 
-    # Esta lista será utilizada para agrupar los DataFrames.
-    dfs = list()
-
-    # Vamos a iterar sobre cada año y cargar el dataset correspondiente.
-    for año in años:
-        dfs.append(
-            pd.read_csv(
-                f"./data/{año}.csv", dtype={"ENTIDAD_RES": str, "MUNICIPIO_RES": str}
-            )
-        )
-
-    # Unimos todos los DataFrames en uno solo.
-    df = pd.concat(dfs)
+    # Cargamos los datos de los años especificados.
+    df = cargar_datos(*años)
 
     # Creamos el CVE para entidad y municipio.
     df["CVE"] = df["ENTIDAD_RES"].str.zfill(2) + df["MUNICIPIO_RES"].str.zfill(3)
@@ -301,15 +319,8 @@ def crear_mapa_nacional(*años):
     # Si son múltiples años, los promediamos.
     pop = pop[[str(año) for año in años]].mean(axis=1)
 
-    # Esta lista será utilizada para agrupar los DataFrames.
-    dfs = list()
-
-    # Vamos a iterar sobre cada año y cargar el dataset correspondiente.
-    for año in años:
-        dfs.append(pd.read_csv(f"./data/{año}.csv"))
-
-    # Unimos todos los DataFrames en uno solo.
-    df = pd.concat(dfs)
+    # Cargamos los datos de los años especificados.
+    df = cargar_datos(*años)
 
     # Seleccionamos los casos confirmados de sarampión.
     df = df[df["DIAGNOSTICO"] == 1]
@@ -321,6 +332,7 @@ def crear_mapa_nacional(*años):
     subtitulo = f"Tasa nacional: <b>{total_casos / total_oblacion * 100000:,.1f}</b> (con <b>{total_casos:,.0f}</b> casos)"
 
     # Seleccionamos los registros de residentes de México.
+    df["ENTIDAD_RES"] = df["ENTIDAD_RES"].astype(int)
     df = df[df["ENTIDAD_RES"].between(1, 32)]
 
     # Contamos el número de registros por entidad de residencia y sexo.
@@ -620,19 +632,8 @@ def crear_mapa_municipal(*años):
     # Si son múltiples años, los promediamos.
     pop = pop[[str(año) for año in años]].mean(axis=1)
 
-    # Esta lista será utilizada para agrupar los DataFrames.
-    dfs = list()
-
-    # Vamos a iterar sobre cada año y cargar el dataset correspondiente.
-    for año in años:
-        dfs.append(
-            pd.read_csv(
-                f"./data/{año}.csv", dtype={"ENTIDAD_RES": str, "MUNICIPIO_RES": str}
-            )
-        )
-
-    # Unimos todos los DataFrames en uno solo.
-    df = pd.concat(dfs)
+    # Cargamos los datos de los años especificados.
+    df = cargar_datos(*años)
 
     # Creamos el CVE para entidad y municipio.
     df["CVE"] = df["ENTIDAD_RES"].str.zfill(2) + df["MUNICIPIO_RES"].str.zfill(3)
@@ -866,19 +867,8 @@ def crear_tabla_absolutos(entidad_id, *años):
     # Seleccionamos las columnas de nuestro interés.
     pop = pop[["Entidad", "Municipio", "poblacion"]]
 
-    # Esta lista será utilizada para agrupar los DataFrames.
-    dfs = list()
-
-    # Vamos a iterar sobre cada año y cargar el dataset correspondiente.
-    for año in años:
-        dfs.append(
-            pd.read_csv(
-                f"./data/{año}.csv", dtype={"ENTIDAD_RES": str, "MUNICIPIO_RES": str}
-            )
-        )
-
-    # Unimos todos los DataFrames en uno solo.
-    df = pd.concat(dfs)
+    # Cargamos los datos de los años especificados.
+    df = cargar_datos(*años)
 
     # Seleccionamos los casos confirmados de sarampión.
     df = df[df["DIAGNOSTICO"] == 1]
@@ -1022,19 +1012,8 @@ def crear_tabla_tasa(entidad_id, *años):
     # Seleccionamos las columnas de nuestro interés.
     pop = pop[["Entidad", "Municipio", "poblacion"]]
 
-    # Esta lista será utilizada para agrupar los DataFrames.
-    dfs = list()
-
-    # Vamos a iterar sobre cada año y cargar el dataset correspondiente.
-    for año in años:
-        dfs.append(
-            pd.read_csv(
-                f"./data/{año}.csv", dtype={"ENTIDAD_RES": str, "MUNICIPIO_RES": str}
-            )
-        )
-
-    # Unimos todos los DataFrames en uno solo.
-    df = pd.concat(dfs)
+    # Cargamos los datos de los años especificados.
+    df = cargar_datos(*años)
 
     # Seleccionamos los casos confirmados de sarampión.
     df = df[df["DIAGNOSTICO"] == 1]
