@@ -7,7 +7,7 @@ from scipy.stats import bootstrap
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "22/04/2026"
+FECHA_FUENTE = "28/04/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
