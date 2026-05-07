@@ -7,7 +7,7 @@ from scipy.stats import bootstrap
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "28/04/2026"
+FECHA_FUENTE = "06/05/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -1659,7 +1659,7 @@ def cobertura_vacunacion(*años):
             x=final.index,
             y=final["descartados_mean"],
             name=f"Descartado por sarampión<br>(total: <b>{len(descartados):,.0f}</b>)",
-            marker_color="#00897b",
+            marker_color="#009688",
             marker_line_width=0,
             error_y_array=final["descartados_high"] - final["descartados_mean"],
             error_y_arrayminus=final["descartados_mean"] - final["descartados_low"],

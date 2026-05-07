@@ -9,7 +9,7 @@ from plotly.subplots import make_subplots
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "28/04/2026"
+FECHA_FUENTE = "06/05/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -407,21 +407,12 @@ def crear_mapa_nacional(*años):
         )
     )
 
-    # Vamos a sobreponer otro mapa Choropleth, el cual
-    # tiene el único propósito de mostrar la división política
-    # de las entidades federativas.
-
-    # Cargamos el archivo GeoJSON de México.
-    geojson_borde = json.loads(
-        open("./assets/mexico.json", "r", encoding="utf-8").read()
-    )
-
     # Este mapa tiene mucho menos personalización.
     # Lo único que necesitamos es que muestre los contornos
     # de cada entidad.
     fig.add_traces(
         go.Choropleth(
-            geojson=geojson_borde,
+            geojson=geojson,
             locations=[f"{i:02}" for i in range(1, 33)],
             z=[1 for _ in range(32)],
             featureidkey="properties.CVEGEO",
