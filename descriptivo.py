@@ -7,7 +7,7 @@ from scipy.stats import bootstrap
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "06/05/2026"
+FECHA_FUENTE = "13/05/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -1762,9 +1762,11 @@ def cobertura_vacunacion(*años):
 
 if __name__ == "__main__":
     tendencia_semanal(2025)
+    tendencia_semanal(2026, "right")
     tendencia_mensual(2025, 2026)
 
     tendencia_semanal_origen(2025, "right")
+    tendencia_semanal_origen(2026, "right")
     tendencia_mensual_origen(2025, 2026)
 
     evolucion_casos(2025, 2026)
