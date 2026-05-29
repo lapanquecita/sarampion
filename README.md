@@ -45,7 +45,9 @@ El análisis comienza con la incidencia semanal de casos confirmados de sarampi�
 
 Para esta gráfica de barras, definimos cada semana como el periodo de lunes a domingo. Esta decisión se tomó para facilitar la interpretación al público general.
 
-![Semanal](./imgs/semanal_2025.png)
+![Semanal 2025](./imgs/semanal_2025.png)
+
+![Semanal 2026](./imgs/semanal_2026.png)
 
 Siempre habrá una reducción en la última semana debido al rezago en la captura de registros.
 
@@ -57,7 +59,9 @@ Adicionalmente, esta información también está disponible en formato mensual, 
 
 La evolución de los casos positivos de sarampión se analiza semanalmente según su origen epidemiológico: importados, relacionados con importación, autóctonos y de fuente desconocida.
 
-![Origen semanal](./imgs/origen_semanal_2025.png)
+![Origen semanal 2025](./imgs/origen_semanal_2025.png)
+
+![Origen semanal 2026](./imgs/origen_semanal_2026.png)
 
 Se observa una disminución aparente en la última semana debido al rezago natural en la notificación de casos.
 
