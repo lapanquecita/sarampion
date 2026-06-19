@@ -9,7 +9,7 @@ from plotly.subplots import make_subplots
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "10/06/2026"
+FECHA_FUENTE = "18/06/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -185,7 +185,7 @@ def crear_mapa_entidad(entidad_id, *años):
             locations=df.index,
             z=df["tasa"],
             featureidkey="properties.CVEGEO",
-            colorscale="matter_r",
+            colorscale="portland",
             zmin=valor_min,
             zmax=valor_max,
             colorbar=dict(
@@ -387,7 +387,7 @@ def crear_mapa_nacional(*años):
             locations=df.index,
             z=df["tasa"],
             featureidkey="properties.NOM_ENT",
-            colorscale="matter_r",
+            colorscale="portland",
             marker_line_width=0,
             zmin=valor_min,
             zmax=valor_max,
@@ -698,7 +698,7 @@ def crear_mapa_municipal(*años):
             locations=df.index,
             z=df["tasa"],
             featureidkey="properties.CVEGEO",
-            colorscale="matter_r",
+            colorscale="portland",
             marker_line_color="#FFFFFF",
             marker_line_width=1,
             zmin=valor_min,
