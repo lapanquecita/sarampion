@@ -7,7 +7,7 @@ from scipy.stats import bootstrap
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "13/08/2026"
+FECHA_FUENTE = "27/08/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -908,7 +908,7 @@ def evolucion_casos(*años):
                 ],
             ),
             link=dict(
-                color="hsla(0, 100, 100, 0.225)",
+                color="hsla(0, 100%, 100%, 0.225)",
                 source=[
                     0,
                     0,
@@ -1047,7 +1047,7 @@ def defunciones(*años):
             pointpos=0,
             whiskerwidth=0,
             line_width=0,
-            fillcolor="hsla(0, 0, 0, 0)",
+            fillcolor="hsla(0, 0%, 0%, 0)",
             marker_color="#00e5ff",
             jitter=1,
             marker_size=20,
@@ -1065,7 +1065,7 @@ def defunciones(*años):
             pointpos=0,
             whiskerwidth=0,
             line_width=0,
-            fillcolor="hsla(0, 0, 0, 0)",
+            fillcolor="hsla(0, 0%, 0%, 0)",
             marker_color="#ffea00",
             jitter=1,
             marker_size=20,

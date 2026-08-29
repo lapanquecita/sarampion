@@ -9,7 +9,7 @@ from plotly.subplots import make_subplots
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "13/08/2026"
+FECHA_FUENTE = "27/08/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -212,7 +212,7 @@ def crear_mapa_entidad(entidad_id, *años):
             locations=pop.index,
             z=[1 for _ in range(len(pop))],
             featureidkey="properties.CVEGEO",
-            colorscale=["hsla(0,0,0,0)", "hsla(0,0,0,0)"],
+            colorscale=["hsla(0, 0%, 0%, 0)", "hsla(0, 0%, 0%, 0)"],
             marker_line_color="#FFFFFF",
             marker_line_width=2,
             zmin=0,
@@ -416,7 +416,7 @@ def crear_mapa_nacional(*años):
             locations=[f"{i:02}" for i in range(1, 33)],
             z=[1 for _ in range(32)],
             featureidkey="properties.CVEGEO",
-            colorscale=["hsla(0, 0, 0, 0)", "hsla(0, 0, 0, 0)"],
+            colorscale=["hsla(0, 0%, 0%, 0)", "hsla(0, 0%, 0%, 0)"],
             marker_line_color="#FFFFFF",
             marker_line_width=2,
             showscale=False,
@@ -739,7 +739,7 @@ def crear_mapa_municipal(*años):
             locations=[f"{i:02}" for i in range(1, 33)],
             z=[1 for _ in range(32)],
             featureidkey="properties.CVEGEO",
-            colorscale=["hsla(0, 0, 0, 0)", "hsla(0, 0, 0, 0)"],
+            colorscale=["hsla(0, 0%, 0%, 0)", "hsla(0, 0%, 0%, 0)"],
             marker_line_color="#FFFFFF",
             marker_line_width=4,
             showscale=False,
