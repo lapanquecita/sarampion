@@ -7,7 +7,7 @@ from scipy.stats import bootstrap
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "27/08/2026"
+FECHA_FUENTE = "02/09/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -1236,7 +1236,7 @@ def razon_riesgo(*años):
             mode="lines",
             name="Vacunados (IC 95%)",
             line_width=2,
-            line_color="hsla(190, 100, 50, 0.4)",
+            line_color="hsla(190, 100%, 50%, 0.4)",
             legendrank=2,
         )
     )
@@ -1248,7 +1248,7 @@ def razon_riesgo(*años):
             mode="lines",
             name="Vacunados (media)",
             line_width=2,
-            line_color="hsla(190, 100, 80, 1)",
+            line_color="hsla(190, 100%, 80%, 1)",
             legendrank=1,
         )
     )
@@ -1265,7 +1265,7 @@ def razon_riesgo(*años):
             mode="lines",
             name="No vacunados (IC 95%)",
             line_width=2,
-            line_color="hsla(35, 100, 50, 0.4)",
+            line_color="hsla(35, 100%, 50%, 0.4)",
             legendrank=4,
         )
     )
@@ -1277,7 +1277,7 @@ def razon_riesgo(*años):
             mode="lines",
             name="No vacunados (media)",
             line_width=2,
-            line_color="hsla(35, 100, 80, 1)",
+            line_color="hsla(35, 100%, 80%, 1)",
             legendrank=3,
         )
     )

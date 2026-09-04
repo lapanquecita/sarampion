@@ -9,7 +9,7 @@ from plotly.subplots import make_subplots
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "27/08/2026"
+FECHA_FUENTE = "02/09/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -209,8 +209,8 @@ def crear_mapa_entidad(entidad_id, *años):
     fig.add_traces(
         go.Choropleth(
             geojson=geojson,
-            locations=pop.index,
-            z=[1 for _ in range(len(pop))],
+            locations=[item["properties"]["CVEGEO"] for item in geojson["features"]],
+            z=[1 for _ in geojson["features"]],
             featureidkey="properties.CVEGEO",
             colorscale=["hsla(0, 0%, 0%, 0)", "hsla(0, 0%, 0%, 0)"],
             marker_line_color="#FFFFFF",
@@ -413,8 +413,8 @@ def crear_mapa_nacional(*años):
     fig.add_traces(
         go.Choropleth(
             geojson=geojson,
-            locations=[f"{i:02}" for i in range(1, 33)],
-            z=[1 for _ in range(32)],
+            locations=[item["properties"]["CVEGEO"] for item in geojson["features"]],
+            z=[1 for _ in geojson["features"]],
             featureidkey="properties.CVEGEO",
             colorscale=["hsla(0, 0%, 0%, 0)", "hsla(0, 0%, 0%, 0)"],
             marker_line_color="#FFFFFF",
@@ -726,18 +726,16 @@ def crear_mapa_municipal(*años):
     # de las entidades federativas.
 
     # Cargamos el archivo GeoJSON de México.
-    geojson_borde = json.loads(
-        open("./assets/mexico.json", "r", encoding="utf-8").read()
-    )
+    geo_borde = json.loads(open("./assets/mexico.json", "r", encoding="utf-8").read())
 
     # Este mapa tiene mucho menos personalización.
     # Lo único que necesitamos es que muestre los contornos
     # de cada entidad.
     fig.add_traces(
         go.Choropleth(
-            geojson=geojson_borde,
-            locations=[f"{i:02}" for i in range(1, 33)],
-            z=[1 for _ in range(32)],
+            geojson=geo_borde,
+            locations=[item["properties"]["CVEGEO"] for item in geo_borde["features"]],
+            z=[1 for _ in geo_borde["features"]],
             featureidkey="properties.CVEGEO",
             colorscale=["hsla(0, 0%, 0%, 0)", "hsla(0, 0%, 0%, 0)"],
             marker_line_color="#FFFFFF",
