@@ -9,7 +9,7 @@ from plotly.subplots import make_subplots
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "02/09/2026"
+FECHA_FUENTE = "10/09/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -238,10 +238,6 @@ def crear_mapa_entidad(entidad_id, *años):
 
     fig.update_layout(
         showlegend=False,
-        legend_xanchor="left",
-        legend_yanchor="bottom",
-        legend_bordercolor="#FFFFFF",
-        legend_borderwidth=1.0,
         font_family="Inter",
         font_color="#FFFFFF",
         font_size=28,
