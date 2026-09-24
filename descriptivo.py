@@ -7,7 +7,7 @@ from scipy.stats import bootstrap
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "10/09/2026"
+FECHA_FUENTE = "23/09/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -440,6 +440,9 @@ def tendencia_semanal_origen(año, xanchor="left"):
     # Seleccionamos los casos confirmados de sarampión.
     df = df[df["DIAGNOSTICO"] == 1]
 
+    # Nos aseguramos que ORIGEN_CASO sea int.
+    df["ORIGEN_CASO"] = df["ORIGEN_CASO"].astype(int)
+
     # Quitamos las fechas inválidas.
     df = df[df["FECHA_DIAGNOSTICO"] != "9999-99-99"]
 
@@ -650,6 +653,9 @@ def tendencia_mensual_origen(*años):
 
     # Unimos todos los DataFrames en uno solo.
     df = pd.concat(dfs)
+
+    # Nos aseguramos que ORIGEN_CASO sea int.
+    df["ORIGEN_CASO"] = df["ORIGEN_CASO"].astype(int)
 
     # Contamos el número de casos según su origen y fecha de diagnóstico.
     df = df.pivot_table(
@@ -956,9 +962,9 @@ def evolucion_casos(*años):
         title_text=f"Evolución de los casos confirmados de sarampión en México durante {año}",
         title_x=0.5,
         title_y=0.965,
-        margin_t=120,
+        margin_t=160,
         margin_r=100,
-        margin_b=160,
+        margin_b=140,
         margin_l=100,
         title_font_size=36,
         plot_bgcolor=PLOT_COLOR,
@@ -966,7 +972,7 @@ def evolucion_casos(*años):
         annotations=[
             dict(
                 x=0.01,
-                y=-0.16,
+                y=-0.11,
                 xref="paper",
                 yref="paper",
                 xanchor="left",
@@ -975,7 +981,7 @@ def evolucion_casos(*años):
             ),
             dict(
                 x=0.5,
-                y=-0.16,
+                y=-0.11,
                 xref="paper",
                 yref="paper",
                 xanchor="center",
@@ -984,7 +990,7 @@ def evolucion_casos(*años):
             ),
             dict(
                 x=1.01,
-                y=-0.16,
+                y=-0.11,
                 xref="paper",
                 yref="paper",
                 xanchor="right",

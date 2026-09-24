@@ -9,7 +9,7 @@ from plotly.subplots import make_subplots
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "10/09/2026"
+FECHA_FUENTE = "23/09/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -366,7 +366,7 @@ def crear_mapa_nacional(*años):
     etiquetas[-1] = f"≥{etiquetas[-1]}"
 
     # Cargamos el archivo GeoJSON de México.
-    geojson = json.loads(open("./assets/mexico.json", "r", encoding="utf-8").read())
+    geojson = json.load(open("./assets/mexico.json", "r", encoding="utf-8"))
 
     # Dependiendo de cuantos años fueron analizados será el título y nombre de archivo.
     if len(años) == 1:
@@ -678,7 +678,7 @@ def crear_mapa_municipal(*años):
     etiquetas[-1] = f"≥{etiquetas[-1]}"
 
     # Cargamos el GeoJSON de municipios de México.
-    geojson = json.loads(open("./assets/municipios.json", "r", encoding="utf-8").read())
+    geojson = json.load(open("./assets/municipios.json", "r", encoding="utf-8"))
 
     # Dependiendo de cuantos años fueron analizados será el título y nombre de archivo.
     if len(años) == 1:
@@ -722,7 +722,7 @@ def crear_mapa_municipal(*años):
     # de las entidades federativas.
 
     # Cargamos el archivo GeoJSON de México.
-    geo_borde = json.loads(open("./assets/mexico.json", "r", encoding="utf-8").read())
+    geo_borde = json.load(open("./assets/mexico.json", "r", encoding="utf-8"))
 
     # Este mapa tiene mucho menos personalización.
     # Lo único que necesitamos es que muestre los contornos
