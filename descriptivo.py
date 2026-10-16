@@ -7,7 +7,7 @@ from scipy.stats import bootstrap
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "23/09/2026"
+FECHA_FUENTE = "15/10/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -886,6 +886,7 @@ def evolucion_casos(*años):
         go.Sankey(
             node=dict(
                 pad=50,
+                sort="input",
                 label=[
                     f"<b>Casos confirmados</b><br>({casos_confirmados:,})",
                     f"<b>Vacunados</b><br>({len(vac_si):,})",
