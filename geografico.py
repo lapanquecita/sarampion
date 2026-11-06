@@ -9,7 +9,7 @@ from plotly.subplots import make_subplots
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "15/10/2026"
+FECHA_FUENTE = "05/11/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -351,7 +351,7 @@ def crear_mapa_nacional(*años):
     df["tasa"] = df["total"] / df["pop"] * 100000
 
     # Ordenamos de mayor a menor tasa.
-    df.sort_values("tasa", ascending=False, inplace=True)
+    df = df.sort_values("tasa", ascending=False)
 
     # Obtenemos la tasa mínima y la máxima.
     # Para la máxima usaremos el percentil 95
@@ -882,10 +882,10 @@ def crear_tabla_absolutos(entidad_id, *años):
     df["nombre"] = df["Municipio"] + ", " + df["Entidad"]
 
     # Ordenamos los resultados por número de registros de mayor a menor.
-    df.sort_values(["total", "tasa"], ascending=False, inplace=True)
+    df = df.sort_values(["total", "tasa"], ascending=False)
 
     # Reseteamos el índice y solo escogemos el top 30.
-    df.reset_index(inplace=True)
+    df = df.reset_index()
     df.index += 1
 
     df = df.head(30)
@@ -1027,10 +1027,10 @@ def crear_tabla_tasa(entidad_id, *años):
     df["nombre"] = df["Municipio"] + ", " + df["Entidad"]
 
     # Ordenamos los resultados por la tasa ajustada por población.
-    df.sort_values(["tasa", "tasa"], ascending=False, inplace=True)
+    df = df.sort_values(["tasa", "tasa"], ascending=False)
 
     # Reseteamos el índice y solo escogemos el top 30.
-    df.reset_index(inplace=True)
+    df = df.reset_index()
     df.index += 1
 
     df = df.head(30)

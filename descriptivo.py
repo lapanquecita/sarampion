@@ -7,7 +7,7 @@ from scipy.stats import bootstrap
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "15/10/2026"
+FECHA_FUENTE = "05/11/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -1640,11 +1640,11 @@ def cobertura_vacunacion(*años):
         )
 
     # Consolidamos los resultados en un nuevo DataFrame.
-    final = pd.DataFrame.from_dict(data)
+    final = pd.DataFrame(data)
 
     # Renombramos un par de grupos etarios.
     final["edad"] = final["edad"].replace({"0-0": "<1", "65-120": "≥65"})
-    final.set_index("edad", inplace=True)
+    final = final.set_index("edad")
 
     # Convertimos todas las cifras a porcentaje.
     final *= 100
