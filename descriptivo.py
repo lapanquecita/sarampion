@@ -7,7 +7,7 @@ from scipy.stats import bootstrap
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "05/11/2026"
+FECHA_FUENTE = "10/11/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -1494,7 +1494,6 @@ def tasas_edad_sexo(*años):
     )
 
     fig.update_yaxes(
-        range=[-0.8, None],
         title="Tasa por cada 100,000 hombres/mujeres dentro del grupo de edad",
         ticks="outside",
         title_font_size=22,

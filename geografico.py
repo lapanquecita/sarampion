@@ -9,7 +9,7 @@ from plotly.subplots import make_subplots
 
 
 # La fecha del corte de los datos.
-FECHA_FUENTE = "05/11/2026"
+FECHA_FUENTE = "10/11/2026"
 
 # Estos colores serán la paleta para todas las gráficas.
 PLOT_COLOR = "#1A1A1D"
@@ -649,9 +649,9 @@ def crear_mapa_municipal(*años):
         f"Media: <b>{np.nanmean(df['tasa']):,.1f}</b>",
         f"Mediana: <b>{np.nanmedian(df['tasa']):,.1f}</b>",
         f"DE: <b>{np.nanstd(df['tasa']):,.1f}</b>",
-        f"25%: <b>{np.nanquantile(df['tasa'], 0.25):,.1f}</b>",
-        f"75%: <b>{np.nanquantile(df['tasa'], 0.75):,.1f}</b>",
-        f"95%: <b>{np.nanquantile(df['tasa'], 0.95):,.1f}</b>",
+        f"P25: <b>{np.nanquantile(df['tasa'], 0.25):,.1f}</b>",
+        f"P75: <b>{np.nanquantile(df['tasa'], 0.75):,.1f}</b>",
+        f"P95: <b>{np.nanquantile(df['tasa'], 0.95):,.1f}</b>",
         f"Máximo: <b>{np.nanmax(df['tasa']):,.1f}</b>",
     ]
 
